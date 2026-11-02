@@ -1,0 +1,12 @@
+# Netlify build configuration.
+# Next.js is served through Netlify's OpenNext adapter, which Netlify installs
+# and upgrades automatically — do not pin it here, or builds stop tracking
+# current Next.js releases.
+# https://docs.netlify.com/build/frameworks/framework-setup-guides/nextjs/overview/
+
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "22"
