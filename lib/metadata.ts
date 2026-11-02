@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-const FALLBACK_SITE_URL = "https://ecell-sxcm.example.com";
+const FALLBACK_SITE_URL = "https://ecell-sxcm.netlify.app";
 
 /**
  * Canonical origin for the site, used by metadataBase, canonicals, the sitemap
@@ -9,7 +9,8 @@ const FALLBACK_SITE_URL = "https://ecell-sxcm.example.com";
  *      server and client bundles always agree.
  *   2. URL — injected by Netlify at build and runtime; holds the site's primary
  *      address, including a custom domain once one is attached.
- *   3. A placeholder, so local dev never hands `new URL()` an invalid value.
+ *   3. The deployed Netlify origin, so local builds and non-Netlify hosts
+ *      still emit production-correct SEO tags.
  * Trailing slashes are stripped so `${SITE_URL}/path` cannot double up.
  */
 function resolveSiteUrl(): string {
