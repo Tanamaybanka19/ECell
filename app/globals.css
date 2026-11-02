@@ -1,0 +1,240 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --background: #f2f0e8;
+  --foreground: #07161e;
+  --muted: #e7e4d9;
+  --muted-foreground: #6f7c80;
+  --border: #6f7c80;
+  --accent: #7899ad;
+  --ring: #6f7c80;
+  --frame: #f2f0e8;
+  --font-sans: var(--font-inter), system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+  --font-serif: var(--font-playfair), ui-serif, Georgia, serif;
+}
+
+.dark {
+  --background: #07161e;
+  --foreground: #f2f0e8;
+  --muted: #0e2731;
+  --muted-foreground: #7899ad;
+  --border: #7899ad;
+  --accent: #7899ad;
+  --ring: #7899ad;
+  --frame: #07161e;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+  --color-ring: var(--ring);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+  --font-serif: var(--font-serif);
+}
+
+html {
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.material-symbols-rounded {
+  font-family: "Material Symbols Rounded";
+  font-weight: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  font-feature-settings: "liga";
+  -webkit-font-feature-settings: "liga";
+  -webkit-font-smoothing: antialiased;
+  font-size: 1em;
+  user-select: none;
+}
+
+.skip-to-content {
+  position: absolute;
+  left: -9999px;
+  top: 1rem;
+  z-index: 9999;
+  padding: 0.75rem 1rem;
+  background: var(--background);
+  border: 2px solid var(--ring);
+  border-radius: 0.375rem;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--foreground);
+}
+
+.skip-to-content:focus {
+  left: 1rem;
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.focus-ring:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+html[data-theme-anim="1"]::view-transition-old(root) {
+  z-index: 0;
+}
+
+html[data-theme-anim="1"]::view-transition-new(root) {
+  z-index: 1;
+  animation: theme-reveal 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes theme-reveal {
+  from {
+    clip-path: circle(0px at var(--theme-cx) var(--theme-cy));
+  }
+  to {
+    clip-path: circle(var(--theme-r) at var(--theme-cx) var(--theme-cy));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-theme-anim="1"]::view-transition-new(root) {
+    animation: none;
+  }
+}
+
+.site-frame {
+  display: block;
+  position: absolute;
+  z-index: 9999;
+  pointer-events: none;
+  background-color: var(--frame);
+}
+
+.site-frame--top {
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 10px;
+}
+
+.site-frame--left {
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 10px;
+}
+
+.site-frame--right {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 10px;
+}
+
+.site-corner {
+  display: block;
+  position: absolute;
+  z-index: 9998;
+  pointer-events: none;
+  color: var(--frame);
+}
+
+.site-corner--top-left {
+  transform: rotate(90deg);
+  top: 10px;
+  left: 10px;
+}
+
+.site-corner--top-right {
+  top: 10px;
+  right: 10px;
+  transform: rotate(180deg);
+}
+
+@media (max-width: 850px) {
+  .site-frame,
+  .site-corner {
+    display: none;
+  }
+}
+
+.project-card {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.04);
+  transition:
+    transform 400ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 400ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 400ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.project-card:hover {
+  transform: translateY(-4px);
+  border-color: color-mix(in srgb, var(--foreground) 14%, transparent);
+  box-shadow:
+    0 10px 20px -8px rgb(0 0 0 / 0.12),
+    0 4px 8px -4px rgb(0 0 0 / 0.08);
+}
+
+.dark .project-card {
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.4);
+}
+
+.dark .project-card:hover {
+  box-shadow:
+    0 10px 24px -8px rgb(0 0 0 / 0.6),
+    0 4px 8px -4px rgb(0 0 0 / 0.4);
+}
+
+.project-card__image {
+  overflow: hidden;
+}
+
+.project-card__image-inner {
+  position: absolute;
+  inset: 0;
+  transform: scale(1);
+  transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.project-card:hover .project-card__image-inner {
+  transform: scale(1.06);
+}
