@@ -1,0 +1,19 @@
+name: Keep Supabase Awake
+ 
+on:
+  schedule:
+    - cron: '0 6 * * *'  # Runs daily at 06:00 UTC
+ 
+jobs:
+  keep-awake:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Supabase REST API
+        run: |
+          KEY="${{ secrets.SUPABASE_ANON_KEY }}"
+          URL="https://snkvdvtzkwdwlnxafcrt.supabase.co"
+          curl -s -X POST \
+            -H "apikey: $KEY" \
+            -H "Authorization: bearer $KEY" \
+            "${URL}/rest/v1/state" \
+            -d '{}' > /dev/null
