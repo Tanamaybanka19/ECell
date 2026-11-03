@@ -25,7 +25,9 @@ export type MaterialSymbolName =
   | "lightbulb"
   | "campaign"
   | "inventory_2"
-  | "rss_feed";
+  | "rss_feed"
+  | "visibility"
+  | "visibility_off";
 
 type IconProps = {
   name: MaterialSymbolName;
