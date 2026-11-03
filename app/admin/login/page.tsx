@@ -23,6 +23,7 @@ export default function AdminLoginPage(): ReactNode {
   const loggedIn = useIsLoggedIn();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -62,7 +63,8 @@ export default function AdminLoginPage(): ReactNode {
             void handleSubmit(e);
           }}
           className="mt-7 flex flex-col gap-4"
-        >          <label className="flex flex-col gap-1.5">
+        >
+          <label className="flex flex-col gap-1.5">
             <span className={LABEL_CLS}>Username</span>
             <input
               type="text"
@@ -76,15 +78,28 @@ export default function AdminLoginPage(): ReactNode {
           </label>
           <label className="flex flex-col gap-1.5">
             <span className={LABEL_CLS}>Password</span>
-            <input
-              type="password"
-              className={INPUT_CLS}
-              value={password}
-              autoComplete="current-password"
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                setPassword(e.target.value)
-              }
-            />
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                className={`${INPUT_CLS} pr-10`}
+                value={password}
+                autoComplete="current-password"
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  setPassword(e.target.value)
+                }
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword((prev) => !prev)}
+                className="focus-ring absolute right-2 top-1/2 -translate-y-1/2 rounded-lg p-1.5 text-foreground/50 transition-colors hover:bg-foreground/5 hover:text-foreground"
+                aria-label={showPassword ? "Hide password" : "Show password"}
+              >
+                <Icon
+                  name={showPassword ? "visibility_off" : "visibility"}
+                  className="text-[18px]"
+                />
+              </button>
+            </div>
           </label>
           {error ? (
             <p className="text-[13px] tracking-tight text-red-500">{error}</p>
